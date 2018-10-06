@@ -3,6 +3,25 @@ from models.game import GameModel
 
 
 class Game(Resource):
+    def get(self, name):
+        game = GameModel.get(name)
+        if game:
+            return game.json(), 200
+        else:
+            return {'message': 'Game not found'}, 404
+
+    def delete(self, name):
+        game = GameModel.get(name)
+        if game:
+            game.delete()
+            return "ok", 200
+        return {'message': 'Game not found'}, 404
+
+    def put(self):
+        return "ok", 200
+
+
+class Games(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument(
         'name',
@@ -23,27 +42,8 @@ class Game(Resource):
         help="This field cannot be left blank!"
     )
 
-    def get(self, name):
-        game = GameModel.get(name)
-        if game:
-            return game.json(), 200
-        else:
-            return {'message': 'Game not found'}, 404
-
-    def delete(self, name):
-        game = GameModel.get(name)
-        if game:
-            game.delete()
-            return "ok", 200
-        return {'message': 'Game not found'}, 404
-
-    def put(self):
-        return "ok", 200
-
-
-class Games(Resource):
     def post(self):
-        request_data = Game.parser.parse_args()
+        request_data = Games.parser.parse_args()
         if GameModel.get(request_data.name):
             return {'message': "A game with name '{}' already exists."
                                .format(request_data.name)}, 400
