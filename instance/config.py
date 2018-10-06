@@ -1,6 +1,3 @@
-import os
-
-
 class Config(object):
     """Parent configuration class."""
     DEBUG = True
