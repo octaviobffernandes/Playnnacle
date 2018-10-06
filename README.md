@@ -9,5 +9,5 @@
 * flask run
 
 ## Dependencies
-* flask_api
+* flask_restful
 * flask
