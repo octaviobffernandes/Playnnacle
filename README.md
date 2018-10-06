@@ -6,6 +6,7 @@
 * $env:FLASK_APP = "run.py"
 * $env:FLASK_ENV="development"
 * $env:APP_SETTINGS = "development"
+* flask run
 
 ## Dependencies
 * flask_api
