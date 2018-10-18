@@ -6,11 +6,14 @@ from flask import session
 class GameModel:
     """This class represents the game entity."""
 
-    def __init__(self, name, genre, year):
+    def __init__(self, name, release_date, deck, description, external_id, external_guid):
         """initialize with name."""
         self.name = name
-        self.genre = genre
-        self.year = year
+        self.deck = deck
+        self.description = description
+        self.external_guid = external_guid
+        self.external_id = external_id
+        self.release_date = release_date
         self.date_modified = datetime.datetime.now()
 
     def save(self):
@@ -47,13 +50,15 @@ class GameModel:
         session["games"] = games
 
     def json(self):
-        return {'name': self.name, 'genre': self.genre, 'year': self.year,
+        return {'name': self.name, 'release_date': str(self.release_date),
+                'deck': self.deck, 'description': self.deck, 'external_id': self.external_id,
+                'external_guid': self.external_guid,
                 'date_modified': str(self.date_modified)}
 
     @staticmethod
     def as_game(item):
-        gm = GameModel(item['name'], item['genre'], item['year'])
-        gm.date_modified = item['date_modified']
+        gm = GameModel(item['name'], item['original_release_date'], item['deck'], item['description'], item['id'],
+                       item['guid'])
         return gm
 
     def __repr__(self):

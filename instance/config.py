@@ -11,7 +11,8 @@ class DevelopmentConfig(Config):
     ENV = ""
     SESSION_TYPE = 'filesystem'
     SECRET_KEY = 'redsfsfsfsfis'
-
+    MONGODB_CONNSTR = 'mongodb://user:password@cluster0-shard-00-00-uu4dq.mongodb.net:27017,cluster0-shard-00-01-uu4dq.mongodb.net:27017,cluster0-shard-00-02-uu4dq.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true'
+    CATALOG_NAME = 'PlaynaccleDb'
 
 class TestingConfig(Config):
     """Configurations for Testing, with a separate test database."""
