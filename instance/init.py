@@ -3,7 +3,7 @@ from flask_restful import Api
 from instance.config import app_config
 from resources.game import Game
 from resources.game import Games
-from resources.importdata import ImportData
+from resources.importer import ImportSummary
 
 def create_app(config_name):
     app = Flask(__name__)
@@ -11,6 +11,6 @@ def create_app(config_name):
     api = Api(app)
     api.add_resource(Game, '/game/<string:name>')
     api.add_resource(Games, '/games')
-    api.add_resource(ImportData, '/import')
+    api.add_resource(ImportSummary, '/importsummary')
 
     return app
