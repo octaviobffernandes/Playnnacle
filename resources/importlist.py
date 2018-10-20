@@ -6,16 +6,16 @@ from flask_restful import Resource
 from models.game import GameModel
 from instance.config import app_config
 from repositories.gamerepository import GameRepository
-from exceptions.storeexception import StoreException
+from exceptions.repositoryexception import RepositoryException
 
 
-class ImportSummary(Resource):
+class ImportList(Resource):
     def __init__(self):
         config_name = os.getenv('APP_SETTINGS')
         self.config = app_config[config_name]
-        self.url = self.config.IMPORT_API_URL + "games"
-        self.url = self.url + "?api_key={}".format(self.config.IMPORT_API_KEY)
-        self.url = self.url + "&format=json"
+        self.list_url = self.config.IMPORT_API_URL + "games"
+        self.list_url = self.list_url + "?api_key={}".format(self.config.IMPORT_API_KEY)
+        self.list_url = self.list_url + "&format=json"
         self.headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) '
                           'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
@@ -29,7 +29,7 @@ class ImportSummary(Resource):
         end_page = 2
         for i in range(start_page, end_page+1):
             offset = i*self.page_size
-            url = self.url + "&offset={0}".format(offset)
+            url = self.list_url + "&offset={0}".format(offset)
 
             try:
                 self.logger.debug("requesting {0}".format(url))
@@ -51,13 +51,8 @@ class ImportSummary(Resource):
                 try:
                     with GameRepository() as game_repository:
                         game_repository.insert_many(games)
-                except StoreException as e:
+                except RepositoryException as e:
                     self.logger.exception("An error has occurred while persisting the games summary. \n {0}"
                                           .format(e.errors))
                 games = []
-
-
-
-
-
 

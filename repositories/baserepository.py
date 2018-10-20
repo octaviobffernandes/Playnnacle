@@ -1,7 +1,7 @@
 from instance.config import app_config
 import os
 from pymongo import MongoClient
-from exceptions.storeexception import StoreException
+from exceptions.repositoryexception import RepositoryException
 
 
 class BaseRepository():
@@ -12,7 +12,7 @@ class BaseRepository():
             client = MongoClient(self.config.MONGODB_CONNSTR)
             self.db = client[self.config.CATALOG_NAME]
         except Exception as e:
-            raise StoreException(*e.args, **e.kwargs)
+            raise RepositoryException(*e.args, **e.kwargs)
 
     def __enter__(self):
         return self
