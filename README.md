@@ -1,4 +1,4 @@
-﻿# Playnaccle
+﻿# Playnnacle
  
 ## To run on windows:
 1. Open powershell
