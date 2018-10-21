@@ -10,8 +10,10 @@ from resources.importlist import ImportList
 from resources.importdetail import ImportDetail
 
 
-env_path = Path('.') / 'vars.env'
-load_dotenv(dotenv_path=env_path)
+vars_path = Path('.') / 'vars.env'
+private_vars_path = Path('.') / 'private_vars.env'
+load_dotenv(dotenv_path=vars_path)
+load_dotenv(dotenv_path=private_vars_path)
 
 config_name = os.getenv('APP_SETTINGS')
 application = Flask(__name__)

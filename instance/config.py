@@ -9,12 +9,11 @@ class DevelopmentConfig(Config):
     """Configurations for Development."""
     DEBUG = True
     ENV = ""
-    SESSION_TYPE = 'filesystem'
-    SECRET_KEY = 'redsfsfsfsfis'
-    MONGODB_CONNSTR = 'mongodb://user:password@cluster0-shard-00-00-uu4dq.mongodb.net:27017,cluster0-shard-00-01-uu4dq.mongodb.net:27017,cluster0-shard-00-02-uu4dq.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true'
+    MONGODB_CONNSTR = 'mongodb://{0}:{1}@cluster0-shard-00-00-uu4dq.mongodb.net:27017,cluster0-shard-00-01-uu4dq.mongodb.net:27017,cluster0-shard-00-02-uu4dq.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true'
     CATALOG_NAME = 'PlaynaccleDb'
     IMPORT_API_URL = 'https://www.giantbomb.com/api/'
-    IMPORT_API_KEY = 'key'
+    LOG_PATH = 'C:\\logs\\playnnacle.log'
+
 
 class TestingConfig(Config):
     """Configurations for Testing, with a separate test database."""

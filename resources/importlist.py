@@ -14,7 +14,7 @@ class ImportList(Resource):
         config_name = os.getenv('APP_SETTINGS')
         self.config = app_config[config_name]
         self.list_url = self.config.IMPORT_API_URL + "games"
-        self.list_url = self.list_url + "?api_key={}".format(self.config.IMPORT_API_KEY)
+        self.list_url = self.list_url + "?api_key={}".format(os.getenv('IMPORT_API_KEY'))
         self.list_url = self.list_url + "&format=json"
         self.headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) '

@@ -20,7 +20,7 @@ class ImportDetail(Resource):
         config_name = os.getenv('APP_SETTINGS')
         self.config = app_config[config_name]
         self.detail_url = self.config.IMPORT_API_URL + "game/{0}"
-        self.detail_url = self.detail_url + "?api_key={}".format(self.config.IMPORT_API_KEY)
+        self.detail_url = self.detail_url + "?api_key={}".format(os.getenv('IMPORT_API_KEY'))
         self.detail_url = self.detail_url + "&format=json"
         self.headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) '

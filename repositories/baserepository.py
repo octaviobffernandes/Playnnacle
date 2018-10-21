@@ -9,7 +9,8 @@ class BaseRepository():
         try:
             config_name = os.getenv('APP_SETTINGS')
             self.config = app_config[config_name]
-            client = MongoClient(self.config.MONGODB_CONNSTR)
+            connstr = self.config.MONGODB_CONNSTR.format(os.getenv('MONGODB_USER'), os.getenv('MONGODB_PASSWORD'))
+            client = MongoClient(connstr)
             self.db = client[self.config.CATALOG_NAME]
         except Exception as e:
             raise RepositoryException(*e.args, **e.kwargs)
