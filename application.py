@@ -7,7 +7,7 @@ env_path = Path('.') / 'vars.env'
 load_dotenv(dotenv_path=env_path)
 
 config_name = os.getenv('APP_SETTINGS')
-app = create_app(config_name)
+application = create_app(config_name)
 
 if __name__ == '__main__':
-    app.run()
+    application.run()

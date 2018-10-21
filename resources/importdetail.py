@@ -35,7 +35,7 @@ class ImportDetail(Resource):
 
     def run(self):
         batch_size = 200
-        batch_page = 3
+        batch_page = 10
         while batch_page > -1:
             game_batch = self.get_batch(batch_page, batch_size)
 

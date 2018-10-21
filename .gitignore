@@ -3,3 +3,9 @@
 .idea/workspace.xml
 instance/flaskr.egg-info/
 playnnacle.egg-info/
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+.idea/workspace.xml___jb_tmp___
