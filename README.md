@@ -1,13 +1,9 @@
 ﻿# Playnnacle
  
-## To run on windows:
-1. Open powershell
-2. Run following commands in order:
-* $env:FLASK_APP = "run.py"
-* $env:FLASK_ENV="development"
-* $env:APP_SETTINGS = "development"
+## To run:
+1. Open terminal windows
+2. Navigate to project root directory
+3. Run following commands in order:
+* pip install -e .
+* $env:FLASK_ENV="development" (windows) or export FLASK_ENV=development (Unix)
 * flask run
-
-## Dependencies
-* flask_restful
-* flask
