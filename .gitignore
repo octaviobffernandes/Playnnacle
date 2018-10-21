@@ -1,5 +1,5 @@
 
 *.pyc
 .idea/workspace.xml
-.idea/workspace.xml
-.idea/workspace.xml
+instance/flaskr.egg-info/
+playnnacle.egg-info/
