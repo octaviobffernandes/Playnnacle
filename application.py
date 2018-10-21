@@ -1,5 +1,5 @@
 import os
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 from pathlib import Path
 from flask import Flask
 from flask_restful import Api
@@ -11,7 +11,7 @@ from resources.importdetail import ImportDetail
 
 
 env_path = Path('.') / 'vars.env'
-# load_dotenv(dotenv_path=env_path)
+load_dotenv(dotenv_path=env_path)
 
 config_name = os.getenv('APP_SETTINGS')
 application = Flask(__name__)
