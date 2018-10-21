@@ -8,7 +8,7 @@ def setup_custom_logger(name):
     config = app_config[os.getenv('APP_SETTINGS')]
     formatter = logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(module)s - %(message)s')
 
-    file_handler = TimedRotatingFileHandler(config.LOG_PATH, when='midnight')
+    file_handler = TimedRotatingFileHandler(os.getenv('LOG_PATH'), when='midnight')
     file_handler.setLevel(logging.DEBUG)
     file_handler.setFormatter(formatter)
 

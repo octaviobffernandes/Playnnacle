@@ -12,7 +12,6 @@ class DevelopmentConfig(Config):
     MONGODB_CONNSTR = 'mongodb://{0}:{1}@cluster0-shard-00-00-uu4dq.mongodb.net:27017,cluster0-shard-00-01-uu4dq.mongodb.net:27017,cluster0-shard-00-02-uu4dq.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true'
     CATALOG_NAME = 'PlaynaccleDb'
     IMPORT_API_URL = 'https://www.giantbomb.com/api/'
-    LOG_PATH = 'C:\\logs\\playnnacle.log'
 
 
 class TestingConfig(Config):
