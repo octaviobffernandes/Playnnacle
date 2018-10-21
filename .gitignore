@@ -3,10 +3,11 @@
 .idea/workspace.xml
 instance/flaskr.egg-info/
 playnnacle.egg-info/
+.idea/workspace.xml___jb_tmp___
+private_vars.env
+
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
-.idea/workspace.xml___jb_tmp___
-private_vars.env

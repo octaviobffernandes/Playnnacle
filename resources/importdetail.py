@@ -35,7 +35,7 @@ class ImportDetail(Resource):
 
     def run(self):
         batch_size = 200
-        batch_page = 10
+        batch_page = 0
         while batch_page > -1:
             game_batch = self.get_batch(batch_page, batch_size)
 
@@ -79,23 +79,23 @@ class ImportDetail(Resource):
     def load_game_detail(json_data, game_model):
         if 'platforms' in json_data and isinstance(json_data["platforms"], Iterable):
             for p in json_data["platforms"]:
-                game_model.platforms.append(PlatformModel(p['name'], p['abbreviation']))
+                game_model.platforms.append(PlatformModel(p['name'].strip(), p['abbreviation'].strip()))
 
         if 'developers' in json_data and isinstance(json_data["developers"], Iterable):
             for d in json_data["developers"]:
-                game_model.developers.append(DeveloperModel(d['name']))
+                game_model.developers.append(DeveloperModel(d['name'].strip()))
 
         if 'genres' in json_data and isinstance(json_data["genres"], Iterable):
             for g in json_data["genres"]:
-                game_model.genres.append(GenreModel(g['name']))
+                game_model.genres.append(GenreModel(g['name'].strip()))
 
         if 'publishers' in json_data and isinstance(json_data["publishers"], Iterable):
             for p in json_data["publishers"]:
-                game_model.publishers.append(PublisherModel(p['name']))
+                game_model.publishers.append(PublisherModel(p['name'].strip()))
 
         if 'similar_games' in json_data and isinstance(json_data["similar_games"], Iterable):
             for s in json_data["similar_games"]:
-                game_model.similar_games.append(GameModel.create_simple(s['name'], s['id']))
+                game_model.similar_games.append(GameModel.create_simple(s['name'].strip(), s['id']))
 
     def persist_game(self, game_model):
         self.logger.debug("persisting game in database")
