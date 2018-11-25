@@ -6,4 +6,5 @@
 3. Run following commands in order:
 * pip install -r requirements.txt
 * $env:FLASK_ENV="development" (windows) or export FLASK_ENV=development (Unix)
+* $env:FLASK_APP="application.py" (windows) or export FLASK_APP=application.py (Unix)
 * flask run
