@@ -1,4 +1,4 @@
-class Config(object):
+class Config:
     """Parent configuration class."""
     DEBUG = True
     CSRF_ENABLED = True
