@@ -1,5 +1,8 @@
 from flask_restful import Resource, reqparse
 from models.game import GameModel
+from repositories.gamerepository import GameRepository
+import json
+from bson import json_util, ObjectId
 
 
 class Game(Resource):
@@ -42,6 +45,13 @@ class Games(Resource):
         help="This field cannot be left blank!"
     )
 
+    def get(self):
+        with GameRepository() as game_repository:
+            games = game_repository.get_many(100, 0)
+        return {
+            'games': [game.toJSON() for game in games]
+            }, 200  
+
     def post(self):
         request_data = Games.parser.parse_args()
         if GameModel.get(request_data.name):
@@ -57,5 +67,4 @@ class Games(Resource):
 
         return game.json(), 201
 
-    def get(self):
-        return {'games': [game.json() for game in GameModel.get_all()]}, 200
+    

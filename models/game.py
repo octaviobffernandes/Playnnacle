@@ -1,7 +1,7 @@
 import datetime
 import json
 from flask import session
-
+from bson import json_util, ObjectId
 
 class GameModel:
     """This class represents the game entity."""
@@ -25,7 +25,7 @@ class GameModel:
     @staticmethod
     def create_simple(name, external_id):
         return GameModel(None, name, None, None, None, external_id, None)
-
+    
     def json(self):
         return {'_id': self.uid,
                 'name': self.name, 'release_date': str(self.release_date),
@@ -38,13 +38,30 @@ class GameModel:
                 'publishers': [p.json() for p in self.publishers],
                 'similar_games': [g.simple_json() for g in self.similar_games]}
 
+    def json_default(self, value):
+        if isinstance(value, datetime.date):
+            return dict(year=value.year, month=value.month, day=value.day)
+        elif isinstance(value, ObjectId):
+            return ""
+        else:
+            return value.__dict__
+
+    def toJSON(self):
+        return json.loads(json.dumps(self, default=self.json_default, 
+            sort_keys=True, indent=4))
+
     def simple_json(self):
         return {'name': self.name, 'external_id': self.external_id}
 
     @staticmethod
     def as_game(item):
-        gm = GameModel(item['name'], item['original_release_date'], item['deck'], item['description'], item['id'],
-                       item['guid'])
+        gm = GameModel(item['_id'], item['name'], item['release_date'], item['deck'], item['description'],
+                       item['external_id'], item['external_guid'])
+        gm.platforms = item['platforms']
+        gm.publishers = item['publishers']
+        gm.developers = item['developers']
+        gm.genres = item['genres']
+        gm.similar_games = item['similar_games']
         return gm
 
     def __repr__(self):
