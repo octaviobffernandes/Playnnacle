@@ -11,8 +11,8 @@ from mongoengine import connect
 
 
 
-vars_path = Path('.') / 'app/vars.env'
-private_vars_path = Path('.') / 'app/private_vars.env'
+vars_path = Path('.') / 'vars.env'
+private_vars_path = Path('.') / 'private_vars.env'
 load_dotenv(dotenv_path=vars_path)
 load_dotenv(dotenv_path=private_vars_path)
 
