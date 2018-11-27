@@ -1,4 +1,5 @@
 from flask_restful import Resource, request
+from flask import Response
 from models.person import Person
 from models.pet import Pet
 from mongoengine import *
@@ -6,7 +7,7 @@ import datetime
 
 class PersonResource(Resource):
     def get(self):
-        return Person.objects.to_json()
+        return Response(Person.objects.to_json())
 
     def post(self):
         person = Person()
