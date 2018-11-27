@@ -7,7 +7,7 @@ import datetime
 
 class PersonResource(Resource):
     def get(self):
-        return Response(Person.objects.to_json())
+        return Response(Person.objects.to_json(), mimetype='application/json')
 
     def post(self):
         person = Person()

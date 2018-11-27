@@ -4,10 +4,9 @@ from pathlib import Path
 from flask import Flask
 from flask_restful import Api
 from .instance.config import app_config
-from .resources import Game, Games
+from .resources import Game, Games, PersonResource
 # from resources.importlist import ImportList
 # from resources.importdetail import ImportDetail
-from .resources import PersonResource
 from mongoengine import connect
 
 
@@ -26,7 +25,8 @@ api.add_resource(Games, '/games')
 # api.add_resource(ImportList, '/importsummary')
 # api.add_resource(ImportDetail, '/importdetail')
 api.add_resource(PersonResource, '/persons')
-connect(host='mongodb://<USERNAME>:<PASSWORD>@cluster0-shard-00-00-uu4dq.mongodb.net:27017,cluster0-shard-00-01-uu4dq.mongodb.net:27017,cluster0-shard-00-02-uu4dq.mongodb.net:27017/TestDb?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true')
+
+connect(host=app_config[config_name].MONGODB_CONNSTR.format(os.getenv('MONGODB_USER'), os.getenv('MONGODB_PASSWORD')))
 
 if __name__ == '__main__':
     application.run()

@@ -1,11 +1,10 @@
-
 *.pyc
 .idea/workspace.xml
 instance/flaskr.egg-info/
 playnnacle.egg-info/
 .idea/workspace.xml___jb_tmp___
 private_vars.env
-
+app/**/flaskr.egg-info
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
