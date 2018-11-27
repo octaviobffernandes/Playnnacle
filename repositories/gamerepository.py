@@ -1,6 +1,6 @@
-from repositories.baserepository import BaseRepository
-from exceptions.repositoryexception import RepositoryException
-from models.game import GameModel
+from app.repositories.baserepository import BaseRepository
+from app.exceptions.repositoryexception import RepositoryException
+from app.models.game import GameModel
 
 class GameRepository(BaseRepository):
     def insert_many(self, games):

@@ -1,7 +1,7 @@
-from instance.config import app_config
+from app.instance.config import app_config
 import os
 from pymongo import MongoClient
-from exceptions.repositoryexception import RepositoryException
+from app.exceptions.repositoryexception import RepositoryException
 
 
 class BaseRepository():

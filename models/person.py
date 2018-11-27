@@ -1,5 +1,5 @@
 from mongoengine import *
-from models.pet import Pet
+from .pet import Pet
 
 class Person(Document):
     first_name = StringField()

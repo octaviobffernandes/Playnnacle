@@ -3,15 +3,15 @@ import json
 import os
 import instance.log
 from flask_restful import Resource
-from models.game import GameModel
-from instance.config import app_config
-from repositories.gamerepository import GameRepository
-from exceptions.repositoryexception import RepositoryException
+from app.models import GameModel
+from app.instance.config import app_config
+from app.repositories import GameRepository
+from app.exceptions.repositoryexception import RepositoryException
 from collections import Iterable
-from models.platform import PlatformModel
-from models.developer import DeveloperModel
-from models.genre import GenreModel
-from models.publisher import PublisherModel
+from app.models import PlatformModel
+from app.models import DeveloperModel
+from app.models import GenreModel
+from app.models import PublisherModel
 import threading
 
 

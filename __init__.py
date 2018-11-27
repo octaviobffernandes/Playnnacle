@@ -3,18 +3,17 @@ from dotenv import load_dotenv
 from pathlib import Path
 from flask import Flask
 from flask_restful import Api
-from instance.config import app_config
-from resources.game import Game
-from resources.game import Games
+from .instance.config import app_config
+from .resources import Game, Games
 # from resources.importlist import ImportList
 # from resources.importdetail import ImportDetail
-from resources.person import PersonResource
+from .resources import PersonResource
 from mongoengine import connect
 
 
 
-vars_path = Path('.') / 'vars.env'
-private_vars_path = Path('.') / 'private_vars.env'
+vars_path = Path('.') / 'app/vars.env'
+private_vars_path = Path('.') / 'app/private_vars.env'
 load_dotenv(dotenv_path=vars_path)
 load_dotenv(dotenv_path=private_vars_path)
 

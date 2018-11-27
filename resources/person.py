@@ -1,7 +1,7 @@
 from flask_restful import Resource, request
 from flask import Response
-from models.person import Person
-from models.pet import Pet
+from app.models import Person
+from app.models import Pet
 from mongoengine import *
 import datetime
 

@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse
-from models.game import GameModel
-from repositories.gamerepository import GameRepository
+from app.models import GameModel
+from app.repositories import GameRepository
 import json
 from bson import json_util, ObjectId
 
