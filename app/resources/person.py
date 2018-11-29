@@ -1,7 +1,7 @@
 from flask_restful import Resource, request
 from flask import Response
 from app.models import Person
-from app.helpers import PersonInformation
+from app.factories import PersonInformation
 from mongoengine import *
 import sys
 
