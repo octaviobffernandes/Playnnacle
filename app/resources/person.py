@@ -9,8 +9,7 @@ class PersonResource(Resource):
         return Response(Person.objects.to_json(), mimetype='application/json')
 
     def post(self):
-        person = Person()
-        person.from_json(request.get_json())
+        person = Person.from_json(request.get_json())
 
         print(person.first_name)
         print(person.last_name)

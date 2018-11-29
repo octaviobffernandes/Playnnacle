@@ -10,6 +10,9 @@ class Person(Document):
     birth_date = DateTimeField()
     pets = ListField(EmbeddedDocumentField(Pet))
 
-    def from_json(self, json):
+    @staticmethod
+    def from_json(json):
+        person = Person()
         for k, v in json.items():
-            setattr(self, k, v)
+            setattr(person, k, v)
+        return person
