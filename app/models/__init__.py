@@ -5,3 +5,4 @@ from .developer import *
 from .platform import *
 from .genre import *
 from .publisher import *
+from .country import *

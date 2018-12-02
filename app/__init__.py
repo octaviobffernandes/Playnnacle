@@ -4,7 +4,7 @@ from pathlib import Path
 from flask import Flask
 from flask_restful import Api
 from .instance.config import app_config
-from .resources import Game, Games, PersonResource
+from .resources import Game, Games, PersonResource, CountryResource
 from mongoengine import connect
 
 
@@ -22,6 +22,7 @@ api.add_resource(Games, '/games')
 # api.add_resource(ImportList, '/importsummary')
 # api.add_resource(ImportDetail, '/importdetail')
 api.add_resource(PersonResource, '/people')
+api.add_resource(CountryResource, '/countries')
 
 
 connect(host=app_config[config_name].MONGODB_CONNSTR.format(os.getenv('MONGODB_USER'), os.getenv('MONGODB_PASSWORD')))
