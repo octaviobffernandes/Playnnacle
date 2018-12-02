@@ -1,2 +1,2 @@
-from .person import *
+from .personresource import *
 from .game import *
