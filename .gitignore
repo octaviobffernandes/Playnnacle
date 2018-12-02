@@ -6,6 +6,9 @@ playnnacle.egg-info/
 private_vars.env
 app/**/flaskr.egg-info
 
+# VSCode files
+.vscode/*
+
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
