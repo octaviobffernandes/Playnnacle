@@ -1,112 +1,75 @@
-from flask_restful import Resource, request
-from flask import Response
-from flask_restful_swagger import swagger
 from app.schemas import PersonSchema, GetPeopleSchema
 from app.services import PersonService
-import json
+from flask import request
+from flask.json import jsonify
+from flask.views import MethodView
 
-class PersonResource(Resource):
+
+class PeopleResource(MethodView):
     service = PersonService()
 
-    @swagger.operation(
-        notes='some really good notes',
-        responseClass=PersonSchema.__name__,
-        nickname='GetAllPeople',
-        parameters=[
-            {
-              "name": "bsn",
-              "description": "Exact BSN number of the person",
-              "required": False,
-              "allowMultiple": False,
-              "dataType": "string",
-              "paramType": "query"
-            },
-            {
-              "name": "firstName",
-              "description": "Part of the first name of the person",
-              "required": False,
-              "allowMultiple": False,
-              "dataType": "string",
-              "paramType": "query"
-            },
-            {
-              "name": "lastName",
-              "description": "Part of the last name of the person",
-              "required": False,
-              "allowMultiple": False,
-              "dataType": "string",
-              "paramType": "query"
-            },
-            {
-              "name": "limit",
-              "description": "Limit of items per page. Default is 5",
-              "required": False,
-              "allowMultiple": False,
-              "dataType": "int",
-              "paramType": "query"
-            },
-            {
-              "name": "offset",
-              "description": "Number of items to skip in the result set. Default is 0",
-              "required": False,
-              "allowMultiple": False,
-              "dataType": "int",
-              "paramType": "query"
-            }                        
-          ],
-        responseMessages=[
-            {
-              "code": 200,
-              "message": "Success"
-            },
-            {
-              "code": 500,
-              "message": "Internal Server Error"
-            }
-          ]
-        )    
     def get(self):
-        req = GetPeopleSchema().load(request.args).data
-        people = self.service.get_many(req)
+      """People endpoint
+      ---
+      description: Get all people, with optional filters
+      parameters:
+          - name: firstName
+            in: query
+            type: string
+            description: part of a person's first name to use when filtering
+          - name: lastName
+            in: query
+            type: string
+            description: part of a person's last name to use when filtering
+          - name: bsn
+            in: query
+            type: integer
+            description: the exact person's bsn to use when filtering
+          - name: limit
+            in: query
+            type: integer
+            description: the maximum number of records to be returned (default 5)
+          - name: offset
+            in: query
+            type: integer
+            description: the number of records to skip when searching (default 0)            
+      responses:
+          200:
+              description: A list with people meeting specified criteria
+              schema: PersonSchema
+          500:
+              description: Internal server error            
+      """
+      req = GetPeopleSchema().load(request.args).data
+      people = self.service.get_many(req)
+      result = [PersonSchema().dump(p).data for p in people]
+      return jsonify(result),  200
 
-        result = [PersonSchema().dump(p) for p in people]
-        return result, 200
-
-    @swagger.operation(
-        notes='some really good notes',
-        responseClass=PersonSchema.__name__,
-        nickname='SavePerson',
-        parameters=[
-            {
-              "name": "person",
-              "description": "Information about the person to be saved",
-              "required": True,
-              "allowMultiple": False,
-              "dataType": PersonSchema.__name__,
-              "paramType": "body"
-            }                        
-          ],
-        responseMessages=[
-            {
-              "code": 200,
-              "message": "Success"
-            },
-            {
-              "code": 400,
-              "message": "Bad Request"
-            },
-            {
-              "code": 500,
-              "message": "Internal Server Error"
-            }
-          ]
-        )   
     def post(self):
-        person_schema = PersonSchema()
-        person_model = person_schema.load(request.get_json())
+      """People endpoint
+      ---
+      description: Post a new person
+      parameters:
+          - name: person
+            in: body
+            description: information about a new person
+            schema: PersonSchema
+      responses:
+          200:
+              description: the inserted entity
+              schema: PersonSchema
+          400:
+              description: Bad req
+          500:
+              description: Internal server error                                
+      """
 
-        if person_model.errors:
-            return person_model.errors, 400
+      person_schema = PersonSchema()
+      person_model = person_schema.load(request.get_json())
 
-        person = self.service.save(person_model.data)
-        return person_schema.dump(person)
+      if person_model.errors:
+          return person_model.errors, 400
+
+      person = self.service.save(person_model.data)
+      result = person_schema.dump(person).data
+      return jsonify(result)

@@ -1,6 +1,5 @@
 from app.models import Person
 from mongoengine import *
-from app.schemas import GetPeopleSchema
 from app.utils import dotdict
 import functools
 

@@ -13,3 +13,4 @@ app/**/flaskr.egg-info
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+app/static/swagger.json
