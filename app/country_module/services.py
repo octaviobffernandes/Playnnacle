@@ -1,4 +1,4 @@
-from app.models import Country
+from .models import Country
 from mongoengine import *
 from app.utils import dotdict
 import functools

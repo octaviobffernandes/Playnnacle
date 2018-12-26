@@ -1,5 +1,5 @@
-from app.schemas import CreatePersonSchema, UpdatePersonSchema, GetPersonSchema
-from app.services import PersonService
+from .schemas import  CreatePersonSchema, UpdatePersonSchema, GetPersonSchema
+from .services import PersonService
 from flask import request
 from flask.json import jsonify
 from flask.views import MethodView
@@ -69,7 +69,7 @@ class PeopleResource(MethodView):
       person_model = schema.load(request.get_json())
 
       if person_model.errors:
-          return person_model.errors, 400
+          return jsonify(person_model.errors), 400
 
       person = self.service.save(person_model.data)
       result = schema.dump(person).data
@@ -98,7 +98,7 @@ class PeopleResource(MethodView):
         person_new_data = schema.load(request.get_json())
 
         if person_new_data.errors:
-            return person_new_data.errors, 400
+            return jsonify(person_new_data.errors), 400
         
         person = self.service.get(person_new_data.data['id'])
 

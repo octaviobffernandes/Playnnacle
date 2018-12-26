@@ -10,8 +10,10 @@ from apispec.ext.marshmallow import MarshmallowPlugin
 from apispec.utils import validate_swagger
 from flask_swagger_ui import get_swaggerui_blueprint
 from .instance.config import app_config
-from .resources import PeopleResource, CountryResource
-from .schemas import GetPersonSchema, CreatePersonSchema, UpdatePersonSchema, CountrySchema
+from .country_module.resources import CountryResource
+from .country_module.schemas import CountrySchema
+from .person_module.resources import PeopleResource
+from .person_module.schemas import GetPersonSchema, CreatePersonSchema, UpdatePersonSchema
 
 
 vars_path = Path('.') / 'vars.env'

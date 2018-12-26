@@ -1,7 +1,8 @@
-from app.models import Person
-from mongoengine import Q
 from app.utils import dotdict
+from .models import Person
+from mongoengine import Q
 import functools
+
 
 class PersonService():
     def get_many(self, req_dict):

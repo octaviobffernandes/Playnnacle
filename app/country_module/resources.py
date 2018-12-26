@@ -1,9 +1,9 @@
-from app.schemas import CountrySchema, GetCountriesSchema
-from app.services import CountryService
+from .schemas import CountrySchema, GetCountriesSchema
+from .services import CountryService
 from flask import request
 from flask.json import jsonify
 from flask.views import MethodView
-
+from flask.json import jsonify
 
 class CountryResource(MethodView):
     service = CountryService()
@@ -68,7 +68,7 @@ class CountryResource(MethodView):
       country_model = country_schema.load(request.get_json())
 
       if country_model.errors:
-          return country_model.errors, 400
+          return jsonify(country_model.errors), 400
 
       country = self.service.save(country_model.data)
       result = country_schema.dump(country).data

@@ -1,5 +1,4 @@
 from mongoengine import *
-from .pet import Pet
 
 
 class Country(Document):

@@ -1,6 +1,10 @@
 from mongoengine import *
-from .pet import Pet
 
+
+class Pet(EmbeddedDocument):
+    name = StringField(required=True)
+    breed = StringField(required=True)
+    birth_date = DateTimeField()
 
 class Person(Document):
     first_name = StringField(required=True)
@@ -8,3 +12,5 @@ class Person(Document):
     bsn = IntField(required=True)
     birth_date = DateTimeField()
     pets = ListField(EmbeddedDocumentField(Pet))
+
+

@@ -1,9 +1,9 @@
 from marshmallow import Schema, fields, post_load, validate, ValidationError
-from app.models import Person
-from .baseschema import BaseSchema
-from app.models import Country
+from .models import Country
+from app.utils.schemas import *
 
-class CountrySchema(BaseSchema):
+
+class CountrySchema(Schema):
     id = fields.Str(dump_only=True)
     name  = fields.Str(required=True)
     iso_code = fields.Str(dump_to='isoCode', load_from='isoCode', required=True)
@@ -13,4 +13,12 @@ class CountrySchema(BaseSchema):
     @post_load
     def make_country(self, data):
         country = Country()
-        return super(CountrySchema, self).to_obj(data, country)
+        return to_obj(data, country)
+
+
+class GetCountriesSchema(Schema):
+    name = fields.Str()
+    iso_code = fields.Str(load_from='isoCode')
+    language = fields.Str()
+    limit = fields.Int()
+    offset = fields.Int()
