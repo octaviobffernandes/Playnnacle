@@ -1,5 +1,5 @@
 from app.models import Person
-from mongoengine import *
+from mongoengine import Q
 from app.utils import dotdict
 import functools
 
@@ -25,8 +25,14 @@ class PersonService():
         if query_set:
             query = functools.reduce(lambda a,b : a & b, query_set)
         
-        return Person.objects[offset:limit+offset](query)
+        return Person.objects[offset:limit+offset](query).all()
+
+    def get(self, id):
+        return Person.objects(pk=id).first()        
 
     def save(self, person):
         person.save()
         return person
+
+    def delete(self, person):
+        person.delete()

@@ -1,4 +1,4 @@
-from app.schemas import PersonSchema, GetPeopleSchema
+from app.schemas import CreatePersonSchema, UpdatePersonSchema, GetPersonSchema
 from app.services import PersonService
 from flask import request
 from flask.json import jsonify
@@ -36,13 +36,14 @@ class PeopleResource(MethodView):
       responses:
           200:
               description: A list with people meeting specified criteria
-              schema: PersonSchema
+              schema: GetPersonSchema
           500:
               description: Internal server error            
       """
-      req = GetPeopleSchema().load(request.args).data
+      schema = GetPersonSchema()
+      req = schema.load(request.args).data
       people = self.service.get_many(req)
-      result = [PersonSchema().dump(p).data for p in people]
+      result = [schema.dump(p).data for p in people]
       return jsonify(result),  200
 
     def post(self):
@@ -53,23 +54,85 @@ class PeopleResource(MethodView):
           - name: person
             in: body
             description: information about a new person
-            schema: PersonSchema
+            schema: CreatePersonSchema
       responses:
           200:
               description: the inserted entity
-              schema: PersonSchema
+              schema: CreatePersonSchema
           400:
               description: Bad req
           500:
               description: Internal server error                                
       """
 
-      person_schema = PersonSchema()
-      person_model = person_schema.load(request.get_json())
+      schema = CreatePersonSchema()
+      person_model = schema.load(request.get_json())
 
       if person_model.errors:
           return person_model.errors, 400
 
       person = self.service.save(person_model.data)
-      result = person_schema.dump(person).data
+      result = schema.dump(person).data
       return jsonify(result)
+
+    def put(self):
+        """People endpoint
+        ---
+        description: Update an existing person
+        parameters:
+            - name: person
+              in: body
+              description: information about the person to update
+              schema: UpdatePersonSchema
+        responses:
+            204:
+                description: successfully updated
+            400:
+                description: Bad req
+            404:
+                description: Could not find person with provided id
+            500:
+                description: Internal server error                                
+        """        
+        schema = UpdatePersonSchema()
+        person_new_data = schema.load(request.get_json())
+
+        if person_new_data.errors:
+            return person_new_data.errors, 400
+        
+        person = self.service.get(person_new_data.data['id'])
+
+        if person is None:
+            return "could not find person with provided id", 404
+        
+        for key, val in person_new_data.data.items():
+            setattr(person, key, val)
+
+        self.service.save(person)
+        return "saved successfully", 204
+
+    def delete(self):
+        """People endpoint
+        ---
+        description: Delete an existing person
+        parameters:
+            - name: id
+              in: query
+              type: string
+              description: id of the person to delete
+        responses:
+            204:
+                description: successfully deleted
+            404:
+                description: Could not find person with provided id
+            500:
+                description: Internal server error                                
+        """        
+        person_id = request.args['id']
+        person = self.service.get(person_id)
+
+        if person is None:
+            return "could not find person with provided id", 404
+        
+        self.service.delete(person)
+        return "deleted successfully", 204        

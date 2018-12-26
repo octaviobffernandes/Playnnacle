@@ -5,7 +5,7 @@ from .petschema import PetSchema
 from .baseschema import BaseSchema
 
 
-class PersonSchema(BaseSchema):
+class CreatePersonSchema(BaseSchema):
     id = fields.Str(dump_only=True)
     first_name = fields.Str(dump_to='firstName', load_from='firstName', required=True, validate=BaseSchema.must_be_name)
     last_name = fields.Str(dump_to='lastName', load_from='lastName', required=True, validate=BaseSchema.must_be_name)
@@ -15,4 +15,4 @@ class PersonSchema(BaseSchema):
     @post_load
     def make_person(self, data):
         person = Person()
-        return super(PersonSchema, self).to_obj(data, person)
+        return super(CreatePersonSchema, self).to_obj(data, person)

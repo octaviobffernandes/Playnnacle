@@ -11,7 +11,7 @@ from apispec.utils import validate_swagger
 from flask_swagger_ui import get_swaggerui_blueprint
 from .instance.config import app_config
 from .resources import PeopleResource, CountryResource
-from .schemas import PersonSchema, CountrySchema
+from .schemas import GetPersonSchema, CreatePersonSchema, UpdatePersonSchema, CountrySchema
 
 
 vars_path = Path('.') / 'vars.env'
@@ -38,7 +38,9 @@ countryresource = CountryResource.as_view('country')
 app.add_url_rule('/people/', view_func=personresource)
 app.add_url_rule('/country/', view_func=countryresource)
 
-spec.definition('PersonSchema', schema=PersonSchema)
+spec.definition('GetPersonSchema', schema=GetPersonSchema)
+spec.definition('CreatePersonSchema', schema=CreatePersonSchema)
+spec.definition('UpdatePersonSchema', schema=UpdatePersonSchema)
 spec.definition('CountrySchema', schema=CountrySchema)
 with app.test_request_context():
     spec.add_path('/people/', view=personresource)
