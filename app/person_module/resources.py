@@ -1,5 +1,4 @@
-from .schemas import  CreatePersonSchema, UpdatePersonSchema, GetPersonSchema
-from .services import PersonService
+from . import CreatePersonSchema, UpdatePersonSchema, GetPersonSchema, PersonService
 from flask import request
 from flask.json import jsonify
 from flask.views import MethodView

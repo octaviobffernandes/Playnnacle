@@ -1,5 +1,5 @@
 from marshmallow import Schema, fields, post_load, validate, ValidationError
-from .models import Country
+from . import Country
 from app.utils.schemas import *
 
 

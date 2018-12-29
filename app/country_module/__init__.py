@@ -1,5 +1,5 @@
 from .models import *
-from .resources import *
 from .schemas import *
 from .services import *
+from .resources import *
 from .blueprint import *

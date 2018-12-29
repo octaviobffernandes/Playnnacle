@@ -1,5 +1,4 @@
-from .schemas import CountrySchema, GetCountriesSchema
-from .services import CountryService
+from . import CountrySchema, GetCountriesSchema, CountryService
 from flask import request
 from flask.json import jsonify
 from flask.views import MethodView

@@ -1,5 +1,5 @@
 from app.utils import dotdict
-from .models import Person
+from . import Person
 from mongoengine import Q
 import functools
 

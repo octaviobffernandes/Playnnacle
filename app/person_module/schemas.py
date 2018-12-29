@@ -1,5 +1,5 @@
 from marshmallow import Schema, fields, post_load, validate
-from .models import Person, Pet
+from . import Person, Pet
 from app.utils.schemas import *
 
 
