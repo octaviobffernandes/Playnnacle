@@ -14,7 +14,7 @@ from .country_module.resources import CountryResource
 from .country_module.schemas import CountrySchema
 from .person_module.resources import PeopleResource
 from .person_module.schemas import GetPersonSchema, CreatePersonSchema, UpdatePersonSchema
-
+from .person_module.blueprint import person_blueprint, person_view
 
 vars_path = Path('.') / 'vars.env'
 private_vars_path = Path('.') / 'private_vars.env'
@@ -35,17 +35,17 @@ spec = APISpec(
     ],
 )
 
-personresource  = PeopleResource.as_view('people')
 countryresource = CountryResource.as_view('country')
-app.add_url_rule('/people/', view_func=personresource)
 app.add_url_rule('/country/', view_func=countryresource)
+app.register_blueprint(person_blueprint)
 
 spec.definition('GetPersonSchema', schema=GetPersonSchema)
 spec.definition('CreatePersonSchema', schema=CreatePersonSchema)
 spec.definition('UpdatePersonSchema', schema=UpdatePersonSchema)
 spec.definition('CountrySchema', schema=CountrySchema)
+
 with app.test_request_context():
-    spec.add_path('/people/', view=personresource)
+    spec.add_path(url_for('person.people'), view=person_view)
     spec.add_path('/country/', view=countryresource)
 
 validate_swagger(spec)
