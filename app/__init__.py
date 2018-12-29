@@ -12,6 +12,7 @@ from flask_swagger_ui import get_swaggerui_blueprint
 from .instance.config import app_config
 from .country_module.resources import CountryResource
 from .country_module.schemas import CountrySchema
+from .country_module.blueprint import country_blueprint, country_view
 from .person_module.resources import PeopleResource
 from .person_module.schemas import GetPersonSchema, CreatePersonSchema, UpdatePersonSchema
 from .person_module.blueprint import person_blueprint, person_view
@@ -35,9 +36,8 @@ spec = APISpec(
     ],
 )
 
-countryresource = CountryResource.as_view('country')
-app.add_url_rule('/country/', view_func=countryresource)
 app.register_blueprint(person_blueprint)
+app.register_blueprint(country_blueprint)
 
 spec.definition('GetPersonSchema', schema=GetPersonSchema)
 spec.definition('CreatePersonSchema', schema=CreatePersonSchema)
@@ -46,7 +46,7 @@ spec.definition('CountrySchema', schema=CountrySchema)
 
 with app.test_request_context():
     spec.add_path(url_for('person.people'), view=person_view)
-    spec.add_path('/country/', view=countryresource)
+    spec.add_path(url_for('country.countries'), view=country_view)
 
 validate_swagger(spec)
 with app.test_request_context():
