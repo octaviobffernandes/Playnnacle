@@ -11,7 +11,7 @@ from apispec.utils import validate_swagger
 from flask_swagger_ui import get_swaggerui_blueprint
 from .instance.config import app_config
 from .country_module import CountryResource, CountrySchema, country_blueprint, country_view
-from .person_module import PeopleResource, GetPersonSchema, CreatePersonSchema, UpdatePersonSchema, person_blueprint, person_view
+from .person_module import PeopleResource, GetPersonSchema, CreatePersonSchema, UpdatePersonSchema, person_blueprint, person_view, people_view
 
 vars_path = Path('.') / 'vars.env'
 private_vars_path = Path('.') / 'private_vars.env'
@@ -41,8 +41,9 @@ spec.definition('UpdatePersonSchema', schema=UpdatePersonSchema)
 spec.definition('CountrySchema', schema=CountrySchema)
 
 with app.test_request_context():
-    spec.add_path(url_for('person.people'), view=person_view)
-    spec.add_path(url_for('country.countries'), view=country_view)
+    spec.add_path('/people', view=people_view)
+    spec.add_path('/people/<id>', view=person_view)
+    spec.add_path('/country', view=country_view)
 
 validate_swagger(spec)
 with app.test_request_context():

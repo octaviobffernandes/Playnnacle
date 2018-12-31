@@ -3,7 +3,6 @@ from flask import request
 from flask.json import jsonify
 from flask.views import MethodView
 
-
 class PeopleResource(MethodView):
     service = PersonService()
 
@@ -110,13 +109,16 @@ class PeopleResource(MethodView):
         self.service.save(person)
         return "saved successfully", 204
 
-    def delete(self):
-        """People endpoint
+class PersonResource(MethodView):
+    service = PersonService()
+
+    def delete(self, id):
+        """Person endpoint
         ---
         description: Delete an existing person
         parameters:
             - name: id
-              in: query
+              in: path
               type: string
               description: id of the person to delete
         responses:
@@ -125,13 +127,12 @@ class PeopleResource(MethodView):
             404:
                 description: Could not find person with provided id
             500:
-                description: Internal server error                                
-        """        
-        person_id = request.args['id']
-        person = self.service.get(person_id)
+                description: Internal server error
+        """
+        person = self.service.get(id)
 
         if person is None:
             return "could not find person with provided id", 404
-        
+
         self.service.delete(person)
-        return "deleted successfully", 204        
+        return "deleted successfully", 204
