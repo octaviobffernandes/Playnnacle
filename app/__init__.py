@@ -41,9 +41,9 @@ spec.definition('UpdatePersonSchema', schema=UpdatePersonSchema)
 spec.definition('CountrySchema', schema=CountrySchema)
 
 with app.test_request_context():
-    spec.add_path('/people', view=people_view)
-    spec.add_path('/people/<id>', view=person_view)
-    spec.add_path('/country', view=country_view)
+    spec.add_path(url_for('person.people'), view=people_view)
+    spec.add_path(url_for('person.person', id=id), view=person_view)
+    spec.add_path(url_for('country.countries'), view=country_view)
 
 validate_swagger(spec)
 with app.test_request_context():

@@ -121,7 +121,7 @@ class PersonResource(MethodView):
               - name: id
                 in: path
                 type: string
-                description: id of the person to delete
+                description: id of the person to get
           responses:
               200:
                   description: The person data, for the record with the specified id
