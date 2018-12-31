@@ -42,6 +42,7 @@ class PeopleResource(MethodView):
       req = schema.load(request.args).data
       people = self.service.get_many(req)
       result = [schema.dump(p).data for p in people]
+
       return jsonify(result),  200
 
     def post(self):
@@ -112,10 +113,34 @@ class PeopleResource(MethodView):
 class PersonResource(MethodView):
     service = PersonService()
 
+    def get(self, id):
+        """Person endpoint
+          ---
+          description: Get single person by id
+          parameters:
+              - name: id
+                in: path
+                type: string
+                description: id of the person to delete
+          responses:
+              200:
+                  description: The person data, for the record with the specified id
+                  schema: GetPersonSchema
+              404:
+                  description: Could not find person with provided id
+              500:
+                  description: Internal server error
+          """
+        schema = GetPersonSchema()
+        person = self.service.get(id)
+        result = schema.dump(person).data
+
+        return jsonify(result), 200
+
     def delete(self, id):
         """Person endpoint
         ---
-        description: Delete an existing person
+        description: Delete an existing person by id
         parameters:
             - name: id
               in: path
