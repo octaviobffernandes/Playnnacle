@@ -74,42 +74,6 @@ class PeopleResource(MethodView):
       result = schema.dump(person).data
       return jsonify(result)
 
-    def put(self):
-        """People endpoint
-        ---
-        description: Update an existing person
-        parameters:
-            - name: person
-              in: body
-              description: information about the person to update
-              schema: UpdatePersonSchema
-        responses:
-            204:
-                description: successfully updated
-            400:
-                description: Bad req
-            404:
-                description: Could not find person with provided id
-            500:
-                description: Internal server error                                
-        """        
-        schema = UpdatePersonSchema()
-        person_new_data = schema.load(request.get_json())
-
-        if person_new_data.errors:
-            return jsonify(person_new_data.errors), 400
-        
-        person = self.service.get(person_new_data.data['id'])
-
-        if person is None:
-            return "could not find person with provided id", 404
-        
-        for key, val in person_new_data.data.items():
-            setattr(person, key, val)
-
-        self.service.save(person)
-        return "saved successfully", 204
-
 class PersonResource(MethodView):
     service = PersonService()
 
@@ -136,6 +100,47 @@ class PersonResource(MethodView):
         result = schema.dump(person).data
 
         return jsonify(result), 200
+
+    def put(self, id):
+        """People endpoint
+        ---
+        description: Update an existing person
+        parameters:
+            - name: id
+              in: path
+              type: string
+              description: id of the person to update
+            - name: person
+              in: body
+              description: information about the person to update
+              schema: UpdatePersonSchema
+        responses:
+            204:
+                description: successfully updated
+            400:
+                description: Bad req
+            404:
+                description: Could not find person with provided id
+            500:
+                description: Internal server error
+        """
+        schema = UpdatePersonSchema()
+        person_new_data = schema.load(request.get_json())
+
+        if person_new_data.errors:
+            return jsonify(person_new_data.errors), 400
+
+        person = self.service.get(id)
+
+        if person is None:
+            return "could not find person with provided id", 404
+
+        for key, val in person_new_data.data.items():
+            setattr(person, key, val)
+
+        self.service.save(person)
+
+        return "saved successfully", 204
 
     def delete(self, id):
         """Person endpoint

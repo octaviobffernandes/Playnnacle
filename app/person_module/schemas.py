@@ -50,7 +50,6 @@ class UpdatePersonSchema(Schema):
     class Meta:
         ordered = True
 
-    id = fields.Str()
     first_name = fields.Str(dump_to='firstName', load_from='firstName', required=True, validate=must_be_name)
     last_name = fields.Str(dump_to='lastName', load_from='lastName', required=True, validate=must_be_name)
     bsn = fields.Int(required=True)
