@@ -5,9 +5,9 @@ from pathlib import Path
 from flask import Flask, url_for
 from mongoengine import connect
 from apispec import APISpec
-from apispec.ext.flask import FlaskPlugin
+from apispec_webframeworks.flask import FlaskPlugin
 from apispec.ext.marshmallow import MarshmallowPlugin
-from apispec.utils import validate_swagger
+from apispec.utils import validate_spec
 from flask_swagger_ui import get_swaggerui_blueprint
 from .instance.config import app_config
 from .country_module import CountryResource, CountrySchema, country_blueprint, country_view
@@ -21,6 +21,8 @@ load_dotenv(dotenv_path=private_vars_path)
 config_name = os.getenv('APP_SETTINGS')
 app = Flask(__name__)
 app.config.from_object(app_config[config_name])
+app.register_blueprint(person_blueprint)
+app.register_blueprint(country_blueprint)
 
 spec = APISpec(
     title='Swagger Playnnacle',
@@ -32,20 +34,17 @@ spec = APISpec(
     ],
 )
 
-app.register_blueprint(person_blueprint)
-app.register_blueprint(country_blueprint)
-
-spec.definition('GetPersonSchema', schema=GetPersonSchema)
-spec.definition('CreatePersonSchema', schema=CreatePersonSchema)
-spec.definition('UpdatePersonSchema', schema=UpdatePersonSchema)
-spec.definition('CountrySchema', schema=CountrySchema)
+spec.components.schema('GetPersonSchema', schema=GetPersonSchema)
+spec.components.schema('CreatePersonSchema', schema=CreatePersonSchema)
+spec.components.schema('UpdatePersonSchema', schema=UpdatePersonSchema)
+spec.components.schema('CountrySchema', schema=CountrySchema)
 
 with app.test_request_context():
-    spec.add_path(url_for('person.people'), view=people_view)
-    spec.add_path(url_for('person.person', id=id), view=person_view)
-    spec.add_path(url_for('country.countries'), view=country_view)
+    spec.path(url_for('person.people'), view=people_view)
+    spec.path(url_for('person.person', id=id), view=person_view)
+    spec.path(url_for('country.countries'), view=country_view)
 
-validate_swagger(spec)
+validate_spec(spec)
 with app.test_request_context():
     api_url = url_for('static', filename='swagger.json') 
 with open('app/static/swagger.json', 'w') as outfile:
@@ -55,7 +54,7 @@ swagger_url = '/api/docs'
 swaggerui_blueprint = get_swaggerui_blueprint(swagger_url, api_url, config={'app_name': "Playnnacle"})
 app.register_blueprint(swaggerui_blueprint, url_prefix=swagger_url)
 
-connect(host=app_config[config_name].MONGODB_CONNSTR.format(os.getenv('MONGODB_USER'), os.getenv('MONGODB_PASSWORD')))
+connect(host=app.config['MONGODB_CONNSTR'].format(os.getenv('MONGODB_USER'), os.getenv('MONGODB_PASSWORD')))
 
 if __name__ == '__main__':
     app.run()

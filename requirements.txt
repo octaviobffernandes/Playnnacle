@@ -4,21 +4,27 @@
 #
 #    pip-compile --output-file .\requirements.txt .\requirements.in
 #
-apispec==1.0.0
+apispec-webframeworks==0.3.0
+apispec[validation,yaml]==1.0.0
 certifi==2018.11.29       # via requests
-chardet==3.0.4            # via requests
+chardet==3.0.4            # via prance, requests
 click==7.0                # via flask
 flask-swagger-ui==3.18.0
 flask==1.0.2
 idna==2.8                 # via requests
 itsdangerous==1.1.0       # via flask
 jinja2==2.10              # via flask
+jsonschema==2.6.0         # via openapi-spec-validator
 markupsafe==1.1.0         # via jinja2
 marshmallow==2.18.0
 mongoengine==0.16.3
+openapi-spec-validator==0.2.4  # via prance
+prance[osv]==0.14.0       # via apispec
 pymongo==3.7.2            # via mongoengine
 python-dotenv==0.10.1
+pyyaml==4.2b4             # via apispec, openapi-spec-validator, prance
 requests==2.21.0
-six==1.12.0               # via mongoengine
+semver==2.8.1             # via prance
+six==1.12.0               # via mongoengine, openapi-spec-validator, prance
 urllib3==1.24.1           # via requests
 werkzeug==0.14.1          # via flask
